@@ -1,0 +1,55 @@
+version: '3'
+services:
+  mariadb:
+    build: requirements/mariadb/.
+    image: mariadb
+    networks:
+      - net
+    env_file:
+      - .env
+    volumes:
+      - db:/var/lib/mysql
+    restart: always
+
+  nginx:
+    build: requirements/nginx/.
+    image: nginx
+    ports:
+      - "443:443"
+    networks:
+      - net
+    volumes:
+      - wp:/var/www/html
+    depends_on:
+      - wordpress
+    restart: always
+
+  wordpress:
+    build: requirements/wordpress/.
+    image: wordpress
+    depends_on:
+      - mariadb
+    networks:
+      - net
+    volumes:
+      - wp:/var/www/html
+    restart: always
+    env_file:
+      - .env
+
+networks:
+  net:
+
+volumes:
+  wp:
+    driver: local
+    driver_opts:
+      type: none
+      o: bind
+      device: /Users/baki/Desktop/bkhatib/data/wordpress
+  db:
+    driver: local
+    driver_opts:
+      type: none
+      o: bind
+      device: /Users/baki/Desktop/bkhatib/data/mariadb

@@ -1,12 +1,14 @@
 FROM debian:buster
 
-RUN apt-get update\
-    && apt-get upgrade -y\
-    && apt-get install -y\
-    mariadb-server
+RUN apt-get update && \
+    apt-get install -y mariadb-server moreutils gettext && \
+    rm -rf /var/lib/apt/lists/*
 
-COPY conf/50-server.cnf /etc/mysql/mariadb.conf.d/50-server.cnf
+RUN mkdir -p /run/mysqld; \
+    chown -R mysql:mysql /run/mysqld
 
-COPY tools/config.sh /tools/
-RUN chmod +x /tools/config.sh
-RUN /tools/config.sh
+COPY . /
+
+RUN chmod +x /entrypoint.sh
+
+ENTRYPOINT [ "/entrypoint.sh" ]
