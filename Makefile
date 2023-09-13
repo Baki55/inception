@@ -16,4 +16,10 @@ build: dir
 down:
 	docker-compose -p $(NAME) --project-directory $(SRC_DIR) down
 
-re: down build
+prune:
+	docker system prune -fa --volumes
+
+destroy:
+	./destroy.sh
+
+re: down prune build
