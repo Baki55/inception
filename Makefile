@@ -1,8 +1,8 @@
 # IF you have docker-compose down, why would you need docker container rm ?
 
 all:
-	mkdir -p /Users/baki/Desktop/bkhatib/data/wordpress
-	mkdir -p /Users/baki/Desktop/bkhatib/data/mariadb
+	mkdir -p /home/bkhatib/data/wordpress
+	mkdir -p /home/bkhatib/data/mariadb
 	docker compose -f ./srcs/docker-compose.yml up -d --build
 
 down:
