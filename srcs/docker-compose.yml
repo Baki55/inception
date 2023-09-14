@@ -54,13 +54,13 @@ volumes:
     driver_opts:
       type: none
       o: bind
-      device: /Users/baki/Desktop/bkhatib/data/wordpress
+      device: /home/bkhatib/data/wordpress
   wordpress_db:
     driver: local
     driver_opts:
       type: none
       o: bind
-      device: /Users/baki/Desktop/bkhatib/data/mariadb
+      device: /home/bkhatib/data/mariadb
 networks:
   compose-network:
 
