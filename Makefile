@@ -1,25 +1,16 @@
-NAME = inception
-SRC_DIR = srcs
+# IF you have docker-compose down, why would you need docker container rm ?
 
-all: up
-
-dir:
+all:
 	mkdir -p /Users/baki/Desktop/bkhatib/data/wordpress
 	mkdir -p /Users/baki/Desktop/bkhatib/data/mariadb
-
-up: dir
-	docker-compose -p $(NAME) --project-directory $(SRC_DIR) up -d
-
-build: dir
-	docker-compose -p $(NAME) --project-directory $(SRC_DIR) up -d --build
+	docker compose -f ./srcs/docker-compose.yml up -d --build
 
 down:
-	docker-compose -p $(NAME) --project-directory $(SRC_DIR) down
+	docker compose -f ./srcs/docker-compose.yml down
 
-prune:
-	docker system prune -fa --volumes
-
-destroy:
-	./destroy.sh
-
-re: down prune build
+clean:
+	docker container stop $$(docker container ls -aq);\
+	docker container rm $$(docker container ls -aq);\
+	docker rmi $$(docker images -a -q);\
+	docker system prune -a --volumes;\
+	docker volume rm $$(docker volume ls -q);
