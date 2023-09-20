@@ -11,7 +11,7 @@ services:
       - "443:443"
     # wordpress_file on the host will be linked to /var/www/html in the container
     volumes:
-      - wordpress_file:/var/www/html
+      - wp:/var/www/html
     # Always restart the container if it stops
     restart: always
     # Docker networking allows you to attach a container to as many networks as you like. 
@@ -23,7 +23,7 @@ services:
     # The /var/www/html is a directory in my container & wordpress_file is a directory on my VM
     # Both the nginx and the wp containers must share the same volume as nginx gets index.php file
     volumes:
-      - wordpress_file:/var/www/html
+      - wp:/var/www/html
     restart: always
     # sets environment variables inside the container
     env_file:
@@ -39,7 +39,7 @@ services:
     container_name: mariadb
     build: ./mariadb
     volumes:
-      - wordpress_db:/var/lib/mysql
+      - db:/var/lib/mysql
     env_file:
       - .env
     restart: always
@@ -49,18 +49,18 @@ services:
 # Avec des volumes bien configurés, il est possible de réutiliser certaines données dans un autre conteneur
 # Here we are mounting a particular host directory (/home/hdony/data/wordpress_file/) in the containers, making it permanent data
 volumes:
-  wordpress_file:
+  wp:
     driver: local
     driver_opts:
       type: none
       o: bind
-      device: /home/lubuntu/data/wordpress
-  wordpress_db:
+      device: /home/baki/Bureau/inception/data/wordpress
+  db:
     driver: local
     driver_opts:
       type: none
       o: bind
-      device: /home/lubuntu/data/mariadb
+      device: /home/baki/Bureau/inception/data/mariadb
 networks:
   compose-network:
 
