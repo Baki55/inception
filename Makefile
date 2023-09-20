@@ -11,6 +11,8 @@ down:
 clean:
 	docker container stop $$(docker container ls -aq);\
 	docker container rm $$(docker container ls -aq);\
-	docker rmi $$(docker images -a -q);\
+	docker rmi $$(docker images -aq);\
+	docker network rm $(docker network ls -q);\
 	docker system prune -a --volumes;\
-	docker volume rm $$(docker volume ls -q);
+	docker volume rm $$(docker volume ls -q);\
+	rm -rf /hom/baki/Bureau/inception/data;
