@@ -15,4 +15,4 @@ clean:
 	docker network rm $(docker network ls -q);\
 	docker system prune -a --volumes;\
 	docker volume rm $$(docker volume ls -q);\
-	rm -rf /hom/baki/Bureau/inception/data;
+	rm -rf /home/baki/Bureau/inception/data;
